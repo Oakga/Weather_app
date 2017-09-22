@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <!-- <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css'> -->
+    <link href="css/styles.css" rel="stylesheet" type="text/css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>  
+</head>
+<body>
+    <header>
+        <h1>SkyCast Weather App Prototype</h1>
+    </header>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-8">
+                <form id="location-form">
+                    <h2>Enter City</h2><input value="New York" type="text" id="location-input" class="form-control form-control-lg "/>
+                    <footer class="blockquote-footer">[example: New York]</footer>                    
+                    <h2>Enter Date</h2><input value="2018-10-10" type="text" id="date-input" class="form-control form-control-lg "/>
+                    <footer class="blockquote-footer">[example: 2010-08-10][year-month-day]</footer>
+                    <br>
+                    <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                </form>
+                <div id="formatted-address"></div>
+                <div id="geometry-component"></div>
+                <div id="weeklyWeather-component"></div>
+            </div>
+            <div class="col-sm-4">
+                <h2>Recent Searches</h2>
+                <table class="table table-hover">
+                    <thead class="thead-inverse">
+                        <tr>
+                            <th>Location</th>
+                            <th>Date</th>
+                        </tr>
+                        <tbody id="history-table">
+                        </tbody>
+                    </thead>
+                </table>
+                <div id="dailyWeather-component"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="js/main.js"></script>
+</body>
+</html>
+
