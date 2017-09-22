@@ -85,7 +85,7 @@ const darkSky = (lat, lng, date = Date.now()) => {
         console.log(error);
         const alert = `
         <div class="alert alert-danger" role="alert">
-        <strong>${error}</strong>
+        <strong>Cannot find Weather information!</strong> Change a few things up and try submitting again.
         </div>
         `;
         document.getElementById('weeklyWeather-component').insertAdjacentHTML("afterbegin",alert);
