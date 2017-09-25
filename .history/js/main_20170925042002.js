@@ -100,7 +100,7 @@ const createWeeklyReportTable = (data) => {
         reportForTheDay=weeklyReport[i];
         itemRows += `
         <tr>
-        <th scope="row">${reportForTheDay.Date}</th>
+        <th scope="row">${reportForTheDay.Time}</th>
         <td>${reportForTheDay.Humidity}%</td>
         <td>${reportForTheDay.Precipitation}%</td>
         <td>${reportForTheDay.Intensity}</td>

@@ -71,11 +71,10 @@ const createWeeklyReportTable = (data) => {
     let formattedTime;
     for(let i=0;i<data.length;i++){
         formattedTime= convertToDateTime(data[i].time);
-        console.log(formattedTime);
         const dayReport = weeklyReport[i] = new foreCastReport(
             formattedTime,
-            Math.round(data[i].humidity*100),
-            Math.round(data[i].precipProbability*100),
+            data[i].humidity*100,
+            data[i].precipProbability*100,
             data[i].precipIntensity,
             data[i].windSpeed,
             data[i].temperatureMax,
@@ -100,7 +99,7 @@ const createWeeklyReportTable = (data) => {
         reportForTheDay=weeklyReport[i];
         itemRows += `
         <tr>
-        <th scope="row">${reportForTheDay.Date}</th>
+        <th scope="row">${reportForTheDay.Time}</th>
         <td>${reportForTheDay.Humidity}%</td>
         <td>${reportForTheDay.Precipitation}%</td>
         <td>${reportForTheDay.Intensity}</td>
@@ -125,18 +124,19 @@ const createWeeklyReportTable = (data) => {
 };
 
 const createTodayReportTable = (data) => {
+    console.log(data);
     let formattedTime = convertToDateTime(data.time);
         const dayReport = new todayReport(
             formattedTime,
             data.summary,
-            Math.round(data.humidity*100),
+            data.humidity,
             data.temperature,
-            Math.round(data.precipProbability*100),
+            data.precipProbability,
             data.precipIntensity,
             data.windSpeed,
         );
 
-    const units = ['','','%','`C','%','%','m/s'];
+    const units = ['','','','`C','%','%','m/s'];
     let reportOutput = ``;
     let counter = 0;
     for( property in dayReport){
