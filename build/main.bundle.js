@@ -70,10 +70,6 @@
 "use strict";
 
 
-var _models = __webpack_require__(1);
-
-var config = __webpack_require__(2);
-
 var geoCode = function geoCode(location) {
     var time = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Date.now();
 
@@ -118,76 +114,6 @@ var darkSky = function darkSky(lat, lng) {
         document.getElementById('weeklyWeather-component').insertAdjacentHTML("afterbegin", alert);
     });
 };
-var createWeeklyReportTable = function createWeeklyReportTable(data) {
-    var weeklyReport = [];
-    var formattedTime = void 0;
-    for (var _i = 0; _i < data.length; _i++) {
-        formattedTime = convertToDateTime(data[_i].time);
-        var dayReport = weeklyReport[_i] = new _models.foreCastReport(formattedTime, data[_i].humidity, data[_i].precipProbability, data[_i].precipIntensity, data[_i].windSpeed, data[_i].temperatureMax, data[_i].temperatureMin);
-    };
-    var columnNames = '';
-    var units = ['', '%', '%', '(mm/hr)', '(m/s)', '(`C)', '(`C)'];
-    var counter = 0;
-    for (property in weeklyReport[0]) {
-        columnNames += '\n        <th>\n        ' + property + units[counter] + '\n        </th>\n        ';
-        counter++;
-    };
-
-    var itemRows = '';
-    var reportForTheDay = void 0;
-    for (var i = 0; i < weeklyReport.length; i++) {
-        reportForTheDay = weeklyReport[i];
-        itemRows += '\n        <tr>\n        <th scope="row">' + reportForTheDay.Time + '</th>\n        <td>' + reportForTheDay.Humidity + '</td>\n        <td>' + reportForTheDay.Precipitation + '</td>\n        <td>' + reportForTheDay.Intensity + '</td>\n        <td>' + reportForTheDay.Wind + '</td>\n        <td>' + reportForTheDay.MaxTemperature + '</td>\n        <td>' + reportForTheDay.MinTemperature + '</td>\n        </tr>';
-    };
-
-    var tableOutput = '\n    <h2> Upcoming Forecasts </h2>\n    <table class="table">\n    <thead class="thead-inverse" id="table-index"> \n    ' + columnNames + '\n    </thead>\n    <tbody>\n    ' + itemRows + '\n    </tbody>\n    </table>\n    ';
-    document.getElementById('weeklyWeather-component').innerHTML = tableOutput;
-};
-
-var createTodayReportTable = function createTodayReportTable(data) {
-    console.log(data);
-    var formattedTime = convertToDateTime(data.time);
-    var dayReport = new _models.todayReport(formattedTime, data.summary, data.humidity, data.temperature, data.precipProbability, data.precipIntensity, data.windSpeed);
-
-    var units = ['', '', '', '`C', '%', '%', 'm/s'];
-    var reportOutput = '';
-    var counter = 0;
-    for (property in dayReport) {
-        reportOutput += '\n        <li class="list-group-item">\n        <strong>\n        ' + property + '\n        </strong>: ' + dayReport[property] + ' ' + units[counter] + '\n        </li>\n        ';
-        counter++;
-    }
-    ;
-
-    var fullReportOutput = '\n    <h2>Today Weather Report </h2>\n    <ul class="list-group"></ul>\n    ' + reportOutput + '\n    </ul>\n    <br>\n    ';
-
-    document.getElementById('dailyWeather-component').innerHTML = fullReportOutput;
-};
-
-var convertToDateTime = function convertToDateTime(time) {
-    var date = new Date(time * 1000);
-    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    year = date.getFullYear();
-    month = months[date.getMonth()];
-    numDate = date.getDate();
-    formattedTime = numDate + ' ' + month + ' ' + year;
-    return formattedTime;
-};
-
-var convertToUnixTime = function convertToUnixTime(time) {
-    return Date.parse(time) / 1000;
-};
-var updateHistory = function updateHistory(location, time) {
-    var formattedTime = convertToDateTime(time);
-
-    var itemRows = '';
-    itemRows += '\n    <tr>\n    <td>' + location + '</td>\n    <td>' + formattedTime + '</td>\n    </tr>';
-
-    var table = document.getElementById('history-table');
-    if (table.childElementCount >= 5) {
-        table.removeChild(table.firstElementChild);
-    };
-    document.getElementById('history-table').insertAdjacentHTML("afterbegin", itemRows);
-};
 
 document.getElementById('location-form').addEventListener('submit', function (e) {
     e.preventDefault();
@@ -200,62 +126,6 @@ document.getElementById('location-form').addEventListener('submit', function (e)
         geoCode(location);
     };
 });
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var foreCastReport = exports.foreCastReport = function foreCastReport(Date, Humidity, Precipitation, Intensity, Wind, MaxTemperature, MinTemperature) {
-    _classCallCheck(this, foreCastReport);
-
-    this.Date = Date;
-    this.Humidity = Humidity;
-    this.Precipitation = Precipitation;
-    this.Intensity = Intensity;
-    this.Wind = Wind;
-    this.MaxTemperature = MaxTemperature;
-    this.MinTemperature = MinTemperature;
-};
-
-;
-
-var todayReport = exports.todayReport = function todayReport(Date, Summary, Humidity, Temperature, Precipitation, Intensity, Wind) {
-    _classCallCheck(this, todayReport);
-
-    this.Date = Date;
-    this.Summary = Summary;
-    this.Humidity = Humidity;
-    this.Temperature = Temperature;
-    this.Precipitation = Precipitation;
-    this.Intensity = Intensity;
-    this.Wind = Wind;
-};
-
-;
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-var config = exports.config = {
-    DARKSKY_API_KEY: 'a467fea14c1e42d510075082c4e8013a',
-    GOOGLE_API_KEY: 'AIzaSyAkYBjwd7ygcP8GpAz47QsP3s3vaweLAE0'
-};
 
 /***/ })
 /******/ ]);
